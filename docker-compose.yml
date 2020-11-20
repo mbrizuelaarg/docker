@@ -6,9 +6,9 @@ services:
     image: eclipse-mosquitto
     restart: always
     volumes:
-      - ./media/diskext1/docker/mqtt/mosquitto/config: /mosquitto/config
-      - ./media/diskext1/docker/mqtt/mosquitto/data: /mosquitto/data
-      - ./media/diskext1/docker/mqtt/mosquitto/log: /mosquitto/log
+      - .:/media/diskext1/docker/mqtt/mosquitto/config: /mosquitto/config
+      - .:/media/diskext1/docker/mqtt/mosquitto/data: /mosquitto/data
+      - .:/media/diskext1/docker/mqtt/mosquitto/log: /mosquitto/log
     ports:
       - 1883:1883
       - 9001:9001
