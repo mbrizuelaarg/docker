@@ -12,7 +12,7 @@ services:
     ports:
       - 1883:1883
       - 9001:9001
-    network:
+    networks:
       - iotbeesnet
 
   influx:
@@ -24,11 +24,11 @@ services:
       - /media/diskext1/docker/influx/influxdb.conf:/opt/bitnami/influxdb/etc/influxdb.conf:ro
     ports:
       - 8086:8086
-    network:
+    networks:
       - iotbeesnet
     environment:
       - INFLUXDB_DB=iotbeesdb1
       - INFLUXDB_ADMIN_USER=userinflux1
       - INFLUXDB_ADMIN_PASSWORD=password
-network:
-  iotbeesnet
+networks:
+  iotbeesnet:
