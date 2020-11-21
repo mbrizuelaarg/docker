@@ -43,5 +43,16 @@ services:
       - /media/diskext1/docker/grafana:/var/lib/grafana
       - /media/diskext1/docker/grafana/plugins:/var/lib/grafana/plugins
 
+  node-red:
+    container_name: nodered
+    image: nodered/node-red
+    restart: always
+    ports:
+      - 1880:1880
+    networks:
+      - iotbeesnet
+    volumes:
+      - /media/diskext1/docker/nodered:/data
+
 networks:
   iotbeesnet:
