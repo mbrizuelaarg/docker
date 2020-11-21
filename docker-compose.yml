@@ -30,5 +30,17 @@ services:
       - INFLUXDB_DB=iotbeesdb1
       - INFLUXDB_ADMIN_USER=userinflux1
       - INFLUXDB_ADMIN_PASSWORD=password
+
+  grafana:
+    container_name: grafana
+    image: grafana
+    restart: always
+    ports:
+      - 3000:3000
+    networks:
+      - iotbeesnet
+    volumes:
+      - /media/diskext1/docker/grafana:/var/lib/grafana
+
 networks:
   iotbeesnet:
