@@ -30,3 +30,5 @@ services:
       - INFLUXDB_DB=iotbeesdb1
       - INFLUXDB_ADMIN_USER=${userinflux1}
       - INFLUXDB_ADMIN_PASSWORD=${password}
+network:
+  iotbeesnet
