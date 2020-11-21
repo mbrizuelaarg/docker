@@ -41,6 +41,7 @@ services:
       - iotbeesnet
     volumes:
       - /media/diskext1/docker/grafana:/var/lib/grafana
+      - /media/diskext1/docker/grafana/plugins:/var/lib/grafana/plugins
 
 networks:
   iotbeesnet:
