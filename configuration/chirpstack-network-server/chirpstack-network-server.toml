@@ -44,7 +44,7 @@ name="EU868"
   max_dr=5
 
 [network_server.gateway.backend.mqtt]
-server="tcp://mosquitto:1883"
+server="tcp://mqtt:1883"
 
 [join_server.default]
 server="http://chirpstack-application-server:8003"
