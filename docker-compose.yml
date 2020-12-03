@@ -1,4 +1,4 @@
-version: "3"
+version: "3.8"
 
 services:
   mqtt:
@@ -84,7 +84,7 @@ services:
     networks:
       - iotbeesnet
     volumes:
-      - ./configuration/postgresql/initdb:/docker-entrypoint-initdb.d
+      - /media/diskext1/docker/docker/configuration/postgresql/initdb:/docker-entrypoint-initdb.d
       - /media/diskext1/docker/chirpstack/postgresqldata:/var/lib/postgresql/data
 
   redis:
