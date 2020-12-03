@@ -44,14 +44,14 @@ services:
       - /media/diskext1/docker/grafana/plugins:/var/lib/grafana/plugins
 
   chirpstack-network-server:
-    image: chirpstack/chirpstack-network-server:3
+    image: ceticasbl/loraappserver
     networks:
       - iotbeesnet
     volumes:
       - /media/diskext1/docker/chirpstack/configuration/chirpstack-network-server:/etc/chirpstack-network-server
 
   chirpstack-application-server:
-    image: chirpstack/chirpstack-application-server:3
+    image: ceticasbl/loraappserver
     ports:
       - 8080:8080
     networks:
@@ -60,7 +60,7 @@ services:
       - /media/diskext1/docker/chirpstack/configuration/chirpstack-application-server:/etc/chirpstack-application-server
 
   chirpstack-gateway-bridge:
-    image: chirpstack/chirpstack-gateway-bridge:3
+    image: ceticasbl/gatewaybridge
     ports:
       - 1700:1700/udp
     networks:
