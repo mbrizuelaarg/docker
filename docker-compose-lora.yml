@@ -1,0 +1,107 @@
+version: "3.8"
+
+services:
+  mqtt:
+    container_name: mqtt
+    image: eclipse-mosquitto
+    restart: always
+    volumes:
+      - /media/diskext1/docker/mqtt/mosquitto/config:/mosquitto/config
+      - /media/diskext1/docker/mqtt/mosquitto/data:/mosquitto/data
+      - /media/diskext1/docker/mqtt/mosquitto/log:/mosquitto/log
+    ports:
+      - 1883:1883
+      - 9001:9001
+    networks:
+      - iotbeesnet
+
+  influx:
+    container_name: influx
+    image: influxdb
+    restart: always
+    volumes:
+      - /media/diskext1/docker/influx:/var/lib/influxdb
+      - /media/diskext1/docker/influx/influxdb.conf:/opt/bitnami/influxdb/etc/influxdb.conf:ro
+    ports:
+      - 8086:8086
+    networks:
+      - iotbeesnet
+    environment:
+      - INFLUXDB_DB=iotbeesdb1
+      - INFLUXDB_ADMIN_USER=userinflux1
+      - INFLUXDB_ADMIN_PASSWORD=password
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    restart: always
+    ports:
+      - 3000:3000
+    networks:
+      - iotbeesnet
+    volumes:
+      - /media/diskext1/docker/grafana:/var/lib/grafana
+      - /media/diskext1/docker/grafana/plugins:/var/lib/grafana/plugins
+
+  chirpstack-network-server:
+    image: chirpstack/chirpstack-network-server:3
+    networks:
+      - iotbeesnet
+    volumes:
+      - /media/diskext1/docker/chirpstack/configuration/chirpstack-network-server:/etc/chirpstack-network-server
+
+  chirpstack-application-server:
+    image: chirpstack/chirpstack-application-server:3
+    ports:
+      - 8080:8080
+    networks:
+      - iotbeesnet
+    volumes:
+      - /media/diskext1/docker/chirpstack/configuration/chirpstack-application-server:/etc/chirpstack-application-server
+
+  chirpstack-gateway-bridge:
+    image: chirpstack/chirpstack-gateway-bridge:3
+    ports:
+      - 1700:1700/udp
+    networks:
+      - iotbeesnet
+    volumes:
+      - /media/diskext1/docker/chirpstack/configuration/chirpstack-gateway-bridge:/etc/chirpstack-gateway-bridge
+
+  chirpstack-geolocation-server:
+    image: chirpstack/chirpstack-geolocation-server:3
+    networks:
+      - iotbeesnet
+    volumes:
+      - /media/diskext1/docker/chirpstack/configuration/chirpstack-geolocation-server:/etc/chirpstack-geolocation-server
+
+  postgresql:
+    image: postgres:9.6-alpine
+    environment:
+      - POSTGRES_PASSWORD=root
+    networks:
+      - iotbeesnet
+    volumes:
+      - ./configuration/postgresql/initdb:/docker-entrypoint-initdb.d
+      - /media/diskext1/docker/chirpstack/postgresqldata:/var/lib/postgresql/data
+
+redis:
+    image: redis:5-alpine
+    networks:
+      - iotbeesnet
+    volumes:
+      - /media/diskext1/docker/chirpstack/redisdata:/data
+
+  node-red:
+    container_name: nodered
+    image: nodered/node-red
+    restart: always
+    ports:
+      - 1880:1880
+    networks:
+      - iotbeesnet
+    volumes:
+      - /media/diskext1/docker/nodered:/data
+
+networks:
+  iotbeesnet:
