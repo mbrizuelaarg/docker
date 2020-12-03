@@ -2,6 +2,6 @@
 # configuration example and documentation.
 
 [integration.mqtt.auth.generic]
-servers=["tcp://iotbeesnet:1883"]
-username="userrmqtt1"
+servers=["tcp://mosquitto:1883"]
+username="usermqtt1"
 password="password"
